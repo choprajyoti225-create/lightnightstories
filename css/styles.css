@@ -1,0 +1,200 @@
+:root {
+  --ink: #0c0f14;
+  --ink-soft: #171c24;
+  --paper: #f4efe4;
+  --paper-dim: #cfc6b2;
+  --aurora-green: #7fd9a8;
+  --aurora-violet: #b79cf0;
+  --rule: rgba(244, 239, 228, 0.14);
+  --font-display: "Fraunces", "Iowan Old Style", serif;
+  --font-mono: "Space Mono", "Courier New", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+.stage {
+  display: grid;
+  grid-template-columns: 58fr 42fr;
+  min-height: 100vh;
+}
+
+.visual {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: var(--ink-soft);
+}
+
+.visual img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 62%;
+  animation: reveal 1.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(12, 15, 20, 0.35) 0%, rgba(12, 15, 20, 0) 30%, rgba(12, 15, 20, 0) 70%, rgba(12, 15, 20, 0.55) 100%);
+}
+
+.visual figcaption {
+  position: absolute;
+  left: 2rem;
+  bottom: 1.75rem;
+  z-index: 2;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--paper);
+  opacity: 0.75;
+  animation: fadeUp 1s ease-out 0.6s both;
+}
+
+.copy {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.6rem;
+  padding: clamp(2.5rem, 5vw, 5rem);
+  border-left: 1px solid var(--rule);
+}
+
+.kicker {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--aurora-green);
+  animation: fadeUp 0.8s ease-out both;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.4rem, 4.6vw, 3.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: 0;
+  background: linear-gradient(120deg, var(--paper) 30%, var(--aurora-green) 55%, var(--aurora-violet) 78%, var(--paper) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: fadeUp 0.9s ease-out 0.12s both;
+}
+
+p {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  line-height: 1.75;
+  color: var(--paper-dim);
+  max-width: 34rem;
+  margin: 0;
+  animation: fadeUp 1s ease-out 0.26s both;
+}
+
+.source {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--paper);
+  text-decoration: none;
+  border-bottom: 1px solid var(--aurora-violet);
+  padding-bottom: 0.2rem;
+  width: fit-content;
+  opacity: 0.8;
+  transition: opacity 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+  animation: fadeUp 1s ease-out 0.4s both;
+}
+
+.source:hover {
+  opacity: 1;
+  color: var(--aurora-green);
+  border-color: var(--aurora-green);
+}
+
+@keyframes reveal {
+  from {
+    transform: scale(1.06);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    transform: translateY(14px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 900px) {
+  .stage {
+    grid-template-columns: 1fr;
+  }
+
+  .visual {
+    height: 52vh;
+    min-height: 320px;
+  }
+
+  .copy {
+    border-left: none;
+    border-top: 1px solid var(--rule);
+    padding: 2.25rem 1.5rem 3rem;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 8vw, 2.6rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .visual img,
+  .kicker,
+  h1,
+  p,
+  .source,
+  .visual figcaption {
+    animation: none;
+  }
+}
